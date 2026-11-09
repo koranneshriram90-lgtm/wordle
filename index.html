@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Wordle - 5 Letter Word Game</title>
+  <meta name="description" content="A free 5-letter Wordle game. Guess the word in 6 tries. Works on desktop and mobile." />
+  <link rel="stylesheet" href="style.css" />
+  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+</head>
+<body>
+  <div class="page">
+    <header class="header">
+      <div class="header-inner">
+        <h1 class="logo">Wordle</h1>
+        <label class="difficulty-label" for="difficulty">Difficulty</label>
+        <select id="difficulty" class="difficulty-select">
+          <option value="easy">Easy</option>
+          <option value="medium" selected>Medium</option>
+          <option value="hard">Hard</option>
+        </select>
+        <div class="header-actions">
+          <button class="icon-btn" id="btnStats" aria-label="View statistics" title="Statistics">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 13h18v-2H3v2zm0-2h18V8H3v3zm0-7h18V3H3v3zm18 15H3V17h18v4z"/></svg>
+          </button>
+          <button class="icon-btn" id="btnHelp" aria-label="How to play" title="How to Play">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <main class="board-container">
+      <div class="board">
+        <div class="msg" id="msg" role="alert" aria-live="polite"></div>
+        <div class="grid" id="grid"></div>
+        <div id="keyboard"></div>
+      </div>
+    </main>
+
+    <div class="footer-note" id="footerNote">
+      Guess the <strong>5-letter word</strong> in <strong>6 tries</strong>. Each guess must be a valid 5-letter word.
+    </div>
+
+    <!-- Stats Modal -->
+    <div class="modal" id="statsModal" role="dialog" aria-modal="true" aria-labelledby="statsTitle" hidden>
+      <div class="modal-backdrop" id="statsBackdrop"></div>
+      <div class="modal-panel">
+        <div class="modal-header">
+          <h2 id="statsTitle">Statistics</h2>
+          <button class="close-btn" id="closeStats" aria-label="Close statistics">&times;</button>
+        </div>
+        <div class="modal-body">
+          <div class="stat-row"><span class="stat-label">Games Played</span><span class="stat-value" id="statPlayed">0</span></div>
+          <div class="stat-row"><span class="stat-label">Win %</span><span class="stat-value" id="statWinPct">0%</span></div>
+          <div class="stat-row"><span class="stat-label">Current Streak</span><span class="stat-value" id="statStreak">0</span></div>
+          <div class="stat-row"><span class="stat-label">Max Streak</span><span class="stat-value" id="statMaxStreak">0</span></div>
+          <div class="stat-row"><span class="stat-label">Guesses Distribution</span></div>
+          <div class="distribution" id="distribution"></div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn-primary" id="newGameStats">New Game</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Help Modal -->
+    <div class="modal" id="helpModal" role="dialog" aria-modal="true" aria-labelledby="helpTitle" hidden>
+      <div class="modal-backdrop" id="helpBackdrop"></div>
+      <div class="modal-panel help-panel">
+        <div class="modal-header">
+          <h2 id="helpTitle">How to Play</h2>
+          <button class="close-btn" id="closeHelp" aria-label="Close help">&times;</button>
+        </div>
+        <div class="modal-body">
+          <p>Guess the <strong>5-letter word</strong> in <strong>6 tries</strong>.</p>
+          <p>Each guess must be a valid 5-letter word. After each guess, the color of the tiles will change to show how close your guess was:</p>
+          <div class="example-row">
+            <div class="example-tile example-green">W</div>
+            <div class="example-tile example-yellow">E</div>
+            <div class="example-tile example-gray">A</div>
+            <div class="example-tile example-gray">R</div>
+            <div class="example-tile example-gray">Y</div>
+          </div>
+          <ul class="help-list">
+            <li><span class="example-tile example-green">Green</span> The letter is in the word and in the correct spot.</li>
+            <li><span class="example-tile example-yellow">Yellow</span> The letter is in the word but in the wrong spot.</li>
+            <li><span class="example-tile example-gray">Gray</span> The letter is not in the word at all.</li>
+          </ul>
+          <p><strong>Keyboard:</strong> Type using your physical keyboard or tap the on-screen keys. Press <kbd>Enter</kbd> to submit and <kbd>Backspace</kbd> to delete.</p>
+        </div>
+        <div class="modal-footer">
+          <button class="btn-primary" id="newGameHelp">New Game</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Game Over Modal -->
+    <div class="modal" id="gameOverModal" role="dialog" aria-modal="true" aria-labelledby="gameOverTitle" hidden>
+      <div class="modal-backdrop" id="gameOverBackdrop"></div>
+      <div class="modal-panel">
+        <div class="modal-header">
+          <h2 id="gameOverTitle">Game Over</h2>
+          <button class="close-btn" id="closeGameOver" aria-label="Close">&times;</button>
+        </div>
+        <div class="modal-body" id="gameOverBody"></div>
+        <div class="modal-footer">
+          <button class="btn-primary" id="newGameOver">New Game</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="words.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
